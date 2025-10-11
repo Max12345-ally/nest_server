@@ -1,10 +1,9 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { ArticleModule } from './modules/article/article.module';
 
 @Module({
-  imports: [],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [ArticleModule], // зависимости от других модулей
+  controllers: [], // за связь с внешним миром и принимает интернет запросы
+  providers: [], // логика работы приложения
 })
 export class AppModule {}
