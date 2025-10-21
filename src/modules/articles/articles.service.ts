@@ -3,7 +3,7 @@ import { CreateArticleDto } from './dto/create-article.dto';
 
 @Injectable()
 export class ArticlesService {
-  private readonly _articles: string[] = ['Статья 1'];
+  private _articles: string[] = ['Статья 1']; //  это как мини база данных в ней хранятся данные
 
   getArticles(): string[] {
     return this._articles;
@@ -23,6 +23,12 @@ export class ArticlesService {
     }
 
     this._articles.push(createArticleDto.text);
+
+    return this._articles;
+  }
+
+  deleteAll(): string[] {
+    this._articles = [];
 
     return this._articles;
   }

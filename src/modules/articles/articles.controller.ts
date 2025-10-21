@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Post } from '@nestjs/common';
 import { ArticlesService } from './articles.service';
 import type { CreateArticleDto } from './dto/create-article.dto';
 
@@ -15,6 +15,8 @@ export class ArticlesController {
   createArticle(@Body() createArticleDto?: CreateArticleDto) {
     return this._articlesService.createArticle(createArticleDto);
   }
-
-  //deleteAll
+  @Delete()
+  deleteAll() {
+    return this._articlesService.deleteAll();
+  }
 }
