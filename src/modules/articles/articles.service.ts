@@ -1,35 +1,29 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
 import { CreateArticleDto } from './dto/create-article.dto';
+import { InjectModel } from '@nestjs/mongoose';
+import { Article, ArticleDocument } from './articles.schema';
+import { Model } from 'mongoose';
+import { UpdateArticleDto } from './dto/update-article.dto';
 
 @Injectable()
 export class ArticlesService {
-  private _articles: string[] = ['Статья 1']; //  это как мини база данных в ней хранятся данные
+  constructor(
+    @InjectModel(Article.name) private readonly _articleModel: Model<ArticleDocument>,
+  ) {}
 
-  getArticles(): string[] {
-    return this._articles;
+  create(createArticleDto: CreateArticleDto) {
+    const createdArticle = new this._articleModel(createArticleDto);
+    return createdArticle.save();
+	}
+  getAll() {
+		return this._articleModel.find();
   }
 
-  createArticle(createArticleDto?: CreateArticleDto): string[] {
-    if (!createArticleDto) {
-      throw new ForbiddenException('Необходимо передать тело запроса');
-    }
-
-    if (!('text' in createArticleDto)) {
-      throw new ForbiddenException('Свойство text не передано в теле запроса');
-    }
-
-    if (typeof createArticleDto.text !== 'string') {
-      throw new ForbiddenException('Тип text должен быть указан строкой!!!');
-    }
-
-    this._articles.push(createArticleDto.text);
-
-    return this._articles;
+  deleteById(id: string) {
+    return this._articleModel.findByIdAndDelete(id)
   }
 
-  deleteAll(): string[] {
-    this._articles = [];
-
-    return this._articles;
+  updateById(id: string, updateArticleDto: UpdateArticleDto) {
+    return this._articleModel.findByIdAndUpdate(id, updateArticleDto, {new: true})
   }
 }

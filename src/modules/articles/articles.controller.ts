@@ -1,22 +1,33 @@
-import { Body, Controller, Delete, Get, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Put } from '@nestjs/common';
 import { ArticlesService } from './articles.service';
-import type { CreateArticleDto } from './dto/create-article.dto';
+import { CreateArticleDto } from './dto/create-article.dto';
+import { UpdateArticleDto } from './dto/update-article.dto';
 
 @Controller('articles')
 export class ArticlesController {
   constructor(private readonly _articlesService: ArticlesService) {}
 
   @Get() // функция декоратор через @ нужна для обёртки другой функции(это TS) и добавлению доп функциональности
-  getArticles() {
-    return this._articlesService.getArticles();
+  getAll() {
+   return this._articlesService.getAll();
   }
 
   @Post()
-  createArticle(@Body() createArticleDto?: CreateArticleDto) {
-    return this._articlesService.createArticle(createArticleDto);
+  create(@Body() createArticleDto: CreateArticleDto) {
+    return this._articlesService.create(createArticleDto);
   }
-  @Delete()
-  deleteAll() {
-    return this._articlesService.deleteAll();
+
+  @Delete(':id')
+  deleteById(@Param('id') id: string) {
+    return this._articlesService.deleteById(id);
   }
+
+  @Put(':id')
+  updateById(
+    @Param('id') id: string,
+    @Body() updateArticleDto: UpdateArticleDto
+  ) {
+    return this._articlesService.updateById(id, updateArticleDto);
+  }
+  
 }

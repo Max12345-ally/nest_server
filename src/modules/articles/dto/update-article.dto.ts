@@ -2,7 +2,7 @@ import * as Joi from 'joi';
 import { JoiSchema, JoiSchemaOptions } from "nestjs-joi";
 
 @JoiSchemaOptions({})
-export class CreateArticleDto {
+export class UpdateArticleDto {
 
   @JoiSchema(Joi.string().required())
   title: string;
