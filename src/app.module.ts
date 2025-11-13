@@ -1,13 +1,15 @@
 import { Module } from '@nestjs/common';
-import { ArticlesModule } from './modules/articles/articles.module';
+import { ArticlesModule } from './features/articles/articles.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { getMongoConnectionString } from './config/mongodb.config';
 import { JoiPipeModule } from 'nestjs-joi';
 import { getConfigJoi } from './config/joi.config';
+import { AuthModule } from './features/auth/auth.module';
 
 const featuredModules = [
   ArticlesModule,
+  AuthModule,
   // Сюда добавлять свои новые модули
   //UsersModule
 ];
@@ -30,7 +32,7 @@ const featuredModules = [
 				defaultValidationOptions: getConfigJoi()
 			}
 		}),
-    ...featuredModules
+    ...featuredModules,
   ], // зависимости от других модулей
   controllers: [], // за связь с внешним миром и принимает интернет запросы
   providers: [], // логика работы приложения
