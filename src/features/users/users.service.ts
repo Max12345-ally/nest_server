@@ -15,4 +15,8 @@ export class UsersService {
 
     return createdUser.save();
   }
+
+  findById(userId: number): Promise<UserDocument | null> {
+    return this._userModel.findById(userId);
+  }
 }

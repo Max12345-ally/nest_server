@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, InternalServerErrorException, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { SignInDto } from './dto/sign-in.dto';
 import { SignUpDto } from './dto/sign-up.dto';
@@ -27,19 +27,19 @@ export class AuthService {
 
       const token = await this._signJwt(user.id);
 
-      return { token, user };
-
+      return { token };
     } catch (error: any) {
+      console.log(error)
       if (error.code === 11000) {
-        throw new UnauthorizedException('Пользователь с таким email уже существует');
+        throw new UnauthorizedException(`Пользователь с email ${signUpDto.email} уже существует`);
       }
 
+      throw new InternalServerErrorException(error);
     }
   }
 
-
-  getMe() {
-            
+  getMe(userId: number) {
+    return this._usersService.findById(userId);
   }
 
   private async _signJwt(userId: number): Promise<string> {

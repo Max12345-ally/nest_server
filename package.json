@@ -28,6 +28,7 @@
     "@nestjs/mongoose": "11.0.3",
     "@nestjs/platform-express": "^11.0.1",
     "bcrypt": "6.0.0",
+    "cookie-parser": "1.4.7",
     "joi": "18.0.1",
     "mongoose": "8.19.2",
     "nestjs-joi": "1.12.0",
