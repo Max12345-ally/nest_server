@@ -1,7 +1,7 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
 import { CreateArticleDto } from './dto/create-article.dto';
 import { InjectModel } from '@nestjs/mongoose';
-import { Article, ArticleDocument } from './articles.schema';
+import { Article, ArticleDocument } from './article.schema';
 import { Model } from 'mongoose';
 import { UpdateArticleDto } from './dto/update-article.dto';
 
@@ -15,6 +15,7 @@ export class ArticlesService {
     const createdArticle = new this._articleModel(createArticleDto);
     return createdArticle.save();
 	}
+  
   getAll() {
 		return this._articleModel.find();
   }
